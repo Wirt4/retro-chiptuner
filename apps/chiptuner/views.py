@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def landing_page(request):
-    return HttpResponse("<button>record</button>")
+    return render(request, "chiptuner/home.html")

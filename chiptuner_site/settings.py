@@ -77,7 +77,7 @@ WSGI_APPLICATION = "chiptuner_site.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 # if is a test, then use SQLite
-if "pytest" in sys.argv[0]:  # use SQLite for tests
+if "pytest" in sys.argv[0]:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",

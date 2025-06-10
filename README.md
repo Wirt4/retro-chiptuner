@@ -14,3 +14,7 @@ First, make sure the venv is running with `source .. activate`,
 then run `python3 -m pip install -r requirements.txt` to load the requirements to  the virtual environment.
 
 To shut off the venv, run `deactivate`.
+
+
+## Testing
+We use pytest and pytest-docker for test coverage. Run `pytest` in the root to run tests.

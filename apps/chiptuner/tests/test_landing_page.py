@@ -3,32 +3,30 @@ from bs4 import BeautifulSoup
 from django.urls import reverse
 
 
-@pytest.mark.django_db
-def test_landing_page_shows_record_button(client):
-    # visit the site root
-    response = client.get(reverse("landing"))
-    # confirm the status is okay
-    assert response.status_code == 200
+class LandingPage:
+    def __init__(self, client):
+        response = client.get(reverse("landing"))
+        assert response.status_code == 200
+        self._soup = BeautifulSoup(response.content, "html.parser")
 
-    # parse the page
-    soup = BeautifulSoup(response.content, "html.parser")
-    record_button = soup.find(
-        lambda tag: tag.name in ["button", "a"] and tag.text.strip().lower() == "record"
-    )
-    assert record_button is not None, "Button with label 'record' not found"
+    def assert_has_button(self, button_name):
+        """
+        Given the response has been successfully pulled from the landing page, when the function is called, then the button is located in the page response.
+
+        The assertion fails if the button is not there.
+        """
+        button = self._soup.find(
+            lambda tag: tag.name in ["button", "a"]
+            and tag.text.strip().lower() == button_name
+        )
+        assert button is not None, "Button with label {} not found".format(button_name)
 
 
-@pytest.mark.django_db
-def test_landing_page_shows_playback_button(client):
-    # visit the site root
-    response = client.get(reverse("landing"))
-    # confirm the status is okay
-    assert response.status_code == 200
-
-    # parse the page
-    soup = BeautifulSoup(response.content, "html.parser")
-    record_button = soup.find(
-        lambda tag: tag.name in ["button", "a"]
-        and tag.text.strip().lower() == "playback"
-    )
-    assert record_button is not None, "Button with label 'playback' not found"
+@pytest.mark.db
+def test_landing_page_has_buttons(client):
+    """
+    Given the landing page response is 200, when the page loads, then it will have buttons named "record" and "playback".
+    """
+    page = LandingPage(client)
+    page.assert_has_button("record")
+    page.assert_has_button("playback")

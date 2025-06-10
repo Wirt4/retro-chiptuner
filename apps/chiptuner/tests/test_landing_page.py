@@ -1,9 +1,17 @@
 import pytest
-from django.urls import reverse
+from bs4 import BeautifulSoup
 
 
 @pytest.mark.django_db
-def test_landing_page_shows_hello_world(client):
+def tpst_landing_page_shows_record_button(client):
+    # visit the site root
     response = client.get("/")
+    # confirm the status is okay
     assert response.status_code == 200
-    assert b"hello world" in response.content.lower()
+
+    # parse the page
+    soup = BeautifulSoup(response.content, "html.parser")
+    record_button = soup.find(
+        lambda tag: tag.name in ["button", "a"] and tag.text.strip().lower() == "record"
+    )
+    assert record_button is not None, "Button with label 'record' not found"

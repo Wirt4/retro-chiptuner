@@ -2,12 +2,9 @@ import pytest
 
 
 def f():
-    pass
+    raise SystemExit(1)
 
 
 def test_mytest():
     with pytest.raises(SystemExit):
         f()
-
-
-# Create your tests here.

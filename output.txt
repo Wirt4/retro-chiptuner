@@ -1,0 +1,109 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.7, pytest-8.4.0, pluggy-1.6.0 -- /Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/bin/python3
+cachedir: .pytest_cache
+django: version: 5.2.2, settings: chiptuner_site.settings (from ini)
+rootdir: /Users/wirtsalthouse/Code/Python/retro-chiptuner
+configfile: pytest.ini
+plugins: django-4.11.1
+collecting ... collected 1 item
+
+apps/chiptuner/tests/test_landing_page.py::test_landing_page_shows_hello_world FAILED [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_landing_page_shows_hello_world ______________________
+
+client = <django.test.client.Client object at 0x107de7530>
+
+    @pytest.mark.django_db
+    def test_landing_page_shows_hello_world(client):
+>       response = client.get("/")
+                   ^^^^^^^^^^^^^^^
+
+apps/chiptuner/tests/test_landing_page.py:7: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/django/test/client.py:1124: in get
+    response = super().get(
+.venv/lib/python3.12/site-packages/django/test/client.py:475: in get
+    return self.generic(
+.venv/lib/python3.12/site-packages/django/test/client.py:671: in generic
+    return self.request(**r)
+           ^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/test/client.py:1087: in request
+    self.check_exception(response)
+.venv/lib/python3.12/site-packages/django/test/client.py:802: in check_exception
+    raise exc_value
+.venv/lib/python3.12/site-packages/django/core/handlers/exception.py:55: in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/utils/deprecation.py:119: in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/contrib/messages/middleware.py:12: in process_request
+    request._messages = default_storage(request)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/contrib/messages/storage/__init__.py:12: in default_storage
+    return import_string(settings.MESSAGE_STORAGE)(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/contrib/messages/storage/fallback.py:17: in __init__
+    storage_class(*args, **kwargs) for storage_class in self.storage_classes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/contrib/messages/storage/cookie.py:92: in __init__
+    self.signer = signing.get_cookie_signer(salt=self.key_salt)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/django/core/signing.py:112: in get_cookie_signer
+    key=_cookie_signer_key(settings.SECRET_KEY),
+                           ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <LazySettings "chiptuner_site.settings">, name = 'SECRET_KEY'
+
+    def __getattr__(self, name):
+        """Return the value of a setting and cache it in self.__dict__."""
+        if (_wrapped := self._wrapped) is empty:
+            self._setup(name)
+            _wrapped = self._wrapped
+        val = getattr(_wrapped, name)
+    
+        # Special case some settings which require further modification.
+        # This is done here for performance reasons so the modified value is cached.
+        if name in {"MEDIA_URL", "STATIC_URL"} and val is not None:
+            val = self._add_script_prefix(val)
+        elif name == "SECRET_KEY" and not val:
+>           raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
+E           django.core.exceptions.ImproperlyConfigured: The SECRET_KEY setting must not be empty.
+
+.venv/lib/python3.12/site-packages/django/conf/__init__.py:90: ImproperlyConfigured
+---------------------------- Captured stderr setup -----------------------------
+Creating test database for alias 'default'...
+------------------------------ Captured log call -------------------------------
+ERROR    django.request:log.py:253 Internal Server Error: /
+Traceback (most recent call last):
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/contrib/messages/middleware.py", line 12, in process_request
+    request._messages = default_storage(request)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/contrib/messages/storage/__init__.py", line 12, in default_storage
+    return import_string(settings.MESSAGE_STORAGE)(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/contrib/messages/storage/fallback.py", line 17, in __init__
+    storage_class(*args, **kwargs) for storage_class in self.storage_classes
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/contrib/messages/storage/cookie.py", line 92, in __init__
+    self.signer = signing.get_cookie_signer(salt=self.key_salt)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/core/signing.py", line 112, in get_cookie_signer
+    key=_cookie_signer_key(settings.SECRET_KEY),
+                           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/wirtsalthouse/Code/Python/retro-chiptuner/.venv/lib/python3.12/site-packages/django/conf/__init__.py", line 90, in __getattr__
+    raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
+django.core.exceptions.ImproperlyConfigured: The SECRET_KEY setting must not be empty.
+--------------------------- Captured stderr teardown ---------------------------
+Destroying test database for alias 'default'...
+=========================== short test summary info ============================
+FAILED apps/chiptuner/tests/test_landing_page.py::test_landing_page_shows_hello_world
+============================== 1 failed in 0.20s ===============================

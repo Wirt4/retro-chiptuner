@@ -37,4 +37,4 @@ USER appuser
 # Expose the Django port
 EXPOSE 8000
 # Run Django’s development server
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "chiptuner_app.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "chiptuner_site.wsgi:application"]

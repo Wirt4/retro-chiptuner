@@ -22,8 +22,3 @@ jobs:
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: docker run --rm -e SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} chiptuner:test pytest
 
-      - name: Debug Secret Key
-        env:
-          ECHO_KEY: "stub"
-        run: echo "ECHO_KEY=$ECHO_KEY"
-

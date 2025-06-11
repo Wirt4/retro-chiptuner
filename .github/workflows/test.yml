@@ -23,3 +23,14 @@ jobs:
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: docker run --rm -e SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} chiptuner:test pytest
 
+      - name: Check if SECRET_KEY is non-empty
+        env:
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        run: |
+          if [ -z "$SECRET_KEY" ]; then
+            echo "SECRET_KEY is EMPTY"
+          else
+            echo "SECRET_KEY is NON-EMPTY"
+          fi
+
+

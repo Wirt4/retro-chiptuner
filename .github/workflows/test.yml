@@ -24,6 +24,6 @@ jobs:
 
       - name: Debug Secret Key
         env:
-          SECRET_KEY: "stub"
-        run: echo "SECRET_KEY=$SECRET_KEY"
+          ECHO_KEY: "stub"
+        run: echo "ECHO_KEY=$ECHO_KEY"
 

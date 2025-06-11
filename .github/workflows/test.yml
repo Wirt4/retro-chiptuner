@@ -1,12 +1,13 @@
-
 name: Test inside Docker
 
 on:
   pull_request:
     branches: [main]
+
 env:
   SECRET_KEY: ${{secrets.DJANGO_SECRET_KEY}}
-  jobs:
+
+jobs:
   test:
     runs-on: ubuntu-latest
 
@@ -20,4 +21,4 @@ env:
         run: docker build -t chiptuner:test .
 
       - name: Run tests inside Docker container
-        run: docker run --rm chiptuner:test pytest 
+        run: docker run --rm chiptuner:test pytest

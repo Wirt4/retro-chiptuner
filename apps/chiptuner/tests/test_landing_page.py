@@ -22,7 +22,7 @@ class LandingPage:
         assert button is not None, "Button with label {} not found".format(button_name)
 
 
-@pytest.mark.db
+@pytest.mark.django_db
 def test_landing_page_has_buttons(client):
     """
     Given the landing page response is 200, when the page loads, then it will have buttons named "record" and "playback".

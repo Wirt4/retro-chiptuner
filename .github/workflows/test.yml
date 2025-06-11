@@ -24,6 +24,6 @@ jobs:
 
       - name: Debug Secret Key
         env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          SECRET_KEY: "stub"
         run: echo "SECRET_KEY=$SECRET_KEY"
 

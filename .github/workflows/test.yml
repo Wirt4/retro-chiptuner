@@ -5,8 +5,8 @@ on:
   pull_request:
     branches: [main]
 env:
-  DJANGO_SECRET_KEY: "Uc01YjAgOfzsIqEhzbV4uTE92p7yJ7AntTbO-Ai_dYrnagJe_WZQc0sa0mdgzfVNO2I6cR-zEgNc07x4ioaTQ"
-jobs:
+  SECRET_KEY: ${{secrets.DJANGO_SECRET_KEY}}
+  jobs:
   test:
     runs-on: ubuntu-latest
 

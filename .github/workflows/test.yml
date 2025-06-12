@@ -17,6 +17,21 @@ jobs:
       - name: Build Docker image
         run: docker build --no-cache -t chiptuner:test .
 
+      - name: Print Python's view of SECRET_KEY
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        run: |
+          docker run --rm \
+          -e DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY \
+          -e SECRET_KEY=$SECRET_KEY \
+          chiptuner:test \
+          python - << 'EOF'
+          import os
+          print("DJANGO_SECRET_KEY:", repr(os.getenv("DJANGO_SECRET_KEY")))
+          print("SECRET_KEY:", repr(os.getenv("SECRET_KEY")))
+          EOF
+
       - name: Run tests inside Docker container
         env:
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}

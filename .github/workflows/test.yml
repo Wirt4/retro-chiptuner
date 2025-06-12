@@ -1,12 +1,18 @@
-name: Test inside Docker
+name: Django Tests CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
-
+    
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.12, 3.13]
 
     steps:
       - uses: actions/checkout@v4
@@ -16,41 +22,3 @@ jobs:
 
       - name: Build Docker image
         run: docker build --no-cache -t chiptuner:test .
-
-      - name: Print Python's view of SECRET_KEY
-        env:
-          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-        run: |
-          docker run --rm \
-          -e DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY \
-          -e SECRET_KEY=$SECRET_KEY \
-          chiptuner:test \
-          python - << 'EOF'
-          import os
-          print("DJANGO_SECRET_KEY:", repr(os.getenv("DJANGO_SECRET_KEY")))
-          print("SECRET_KEY:", repr(os.getenv("SECRET_KEY")))
-          EOF
-
-      - name: Run tests inside Docker container
-        env:
-          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-        run: docker run --rm -e SECRET_KEY=$SECRET_KEY chiptuner:test pytest
-        
-      - name: Check if SECRET_KEY is non-empty
-        env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-        run: |
-          if [ -z "$SECRET_KEY" ]; then
-            echo "SECRET_KEY is EMPTY"
-          else
-            echo "SECRET_KEY is NON-EMPTY"
-          fi
-
-      - name: Debug container ENV
-        env:
-            SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-        run: docker run --rm -e SECRET_KEY=$SECRET_KEY chiptuner:test /bin/sh -c 'env | grep SECRET_KEY'
-
-
-

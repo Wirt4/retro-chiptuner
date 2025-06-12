@@ -15,7 +15,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: docker build -t chiptuner:test .
+        run: docker build --no-cache -t chiptuner:test .
 
       - name: Run tests inside Docker container
         env:
@@ -31,5 +31,11 @@ jobs:
           else
             echo "SECRET_KEY is NON-EMPTY"
           fi
+
+      - name: Debug container ENV
+        env:
+            SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        run: docker run --rm -e SECRET_KEY=$SECRET_KEY chiptuner:test /bin/sh -c 'env | grep SECRET_KEY'
+
 
 

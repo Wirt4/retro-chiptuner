@@ -22,3 +22,6 @@ jobs:
 
       - name: Build Docker image
         run: docker build --no-cache -t chiptuner:test .
+
+      - name: Run Docker test
+        run: docker run --rm chiptuner:test pytest

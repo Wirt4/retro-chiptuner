@@ -24,7 +24,7 @@ jobs:
         
       - name: Check if SECRET_KEY is non-empty
         env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }} + -e SECRET_KEY=$SECRET_KEY
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: |
           if [ -z "$SECRET_KEY" ]; then
             echo "SECRET_KEY is EMPTY"

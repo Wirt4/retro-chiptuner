@@ -19,7 +19,7 @@ jobs:
 
       - name: Run tests inside Docker container
         env:
-          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         run: docker run --rm -e SECRET_KEY=$SECRET_KEY chiptuner:test pytest
         
       - name: Check if SECRET_KEY is non-empty

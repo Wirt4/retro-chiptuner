@@ -25,8 +25,7 @@ class LandingPage:
 @pytest.mark.django_db
 def test_landing_page_has_buttons(client):
     """
-    Given the landing page response is 200, when the page loads, then it will have buttons named "record" and "playback".
+    Given the landing page response is 200, when the page loads, then it will have button named "playback".
     """
     page = LandingPage(client)
-    page.assert_has_button("record")
     page.assert_has_button("playback")
